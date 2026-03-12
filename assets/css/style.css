@@ -1,0 +1,456 @@
+@charset "UTF-8";
+
+/* @FONT FACE (enable the use of 'custom fonts' inside your document) */
+
+/* 
+  You can use 'fontsquirrel' (https://www.fontsquirrel.com) 
+  or 'transfonter' (https://transfonter.org)
+  to generate your own font for the web from .ttf or .oft files 
+*/
+
+@font-face {
+    font-family: 'Mrs Eaves';
+    src: url('../fonts/mrs-eaves/mrs-eaves-roman.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Mrs Eaves';
+    src: url('../fonts/mrs-eaves/mrs-eaves-italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+    font-display: swap;
+}
+
+
+
+/* VARIABLES */
+
+:root {
+  /* Color values */
+  --color-background: rgba(255,255,255,1);
+  --color-text: rgba(0,0,0,1);
+  --color-text-link: rgba(0,0,255,0.8);
+  --color-text-link-hover: rgba(0,0,255,0.4);
+
+  /* Font values */
+  --font-text: "mrs-eaves", serif;
+  /* --font-size: 24px; */
+  --font-size: 30px;
+
+  /* Margin values */
+  --margin: 1rem;
+
+
+  /* Examples of possible variables 
+
+  --font-size-heading: calc(var(--font-size) * 2);
+  --font-size-subheading: calc(var(--font-size) * 1.25);
+  --font-size-caption: calc(var(--font-size) * 0.875);
+
+  --margin-xs: calc(var(--margin) * 0.5);
+  --margin-s: calc(var(--margin) * 1);
+  --margin-m: calc(var(--margin) * 2);
+  --margin-l: calc(var(--margin) * 3);
+  --margin-xl: calc(var(--margin) * 5);
+*/
+font-size: 30px;
+font-size: clamp( 24px, 2.5vw, 30px);
+}
+
+
+
+/* GENERAL STYLES*/
+
+html {
+  /* font-size: 30px; */
+  background-color: #f36ba6
+  color: black;
+}
+
+body {
+  position: relative;
+  background-color: #f36ba6;
+  font-family: "mrs-eaves", serif;
+  /* font-size: 30px; */
+  /* line-height: 1.1rem; */
+  line-height: 1.1;
+  color: black;
+  width:100%;
+  height:auto;
+  overflow-y:auto;
+}
+
+body.thesis-page {
+background-color: #ff2800;
+  color: black;
+}
+
+h1{
+  /* h1 style */
+  /* font-size: 24px; */
+  font-size: .8rem;
+}
+
+h2{
+  /* h2 style */
+    font-weight: normal;             
+    /* font-size: 40px;   */
+    font-size: calc(4rem / 3);  
+    font-style: italic;
+    text-align: center;
+}
+
+h3{
+  /* h3 style */
+}
+
+h4, h5, h6{
+  /* h4-h5-h6 style */
+}
+
+p{
+  /* paragraph style */
+}
+
+p.quote,
+.footnote p { font-size: .75em }
+.footnote p { margin-top: 0 }
+ol, ul{
+  /* ordered list and unordered list styles */
+}
+
+blockquote{
+  /* blockquote element style */
+}
+
+hr{
+  /* horizontal rule style */
+}
+
+a {
+  color: black;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-decoration-color: #9dab09;
+}
+
+/* header stays fixed and centered */
+header {
+    /* position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 1200px; */
+    width: 100%;
+    padding: 0.5rem 0;       /* tight header height */
+    box-sizing: border-box;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    position: sticky;
+    top: 0; 
+    max-width: 60ch;
+    margin-inline: auto;
+}
+
+
+
+/* keep content below header */
+.page-wrapper {
+    padding-top: 4.5rem;     /* header height + extra spacing */
+    padding-top: 3rem;    /* offset content to not overlap header */
+}
+
+/* ===== HOMEPAGE GRID ===== */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  /* padding: 4rem 0 2rem 0; */
+  margin: 4rem 2rem;
+}
+
+.home-item {
+  display: inline-block;      /* allows stacking in columns */
+  width: 100%;                /* full width inside column */
+  margin-bottom: 2rem;        /* vertical spacing between items */
+}
+
+.home-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.home-link:hover {
+  text-decoration: none;
+}
+
+.home-item img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+blockquote {
+  margin: 0.25rem 0;
+  font-style: normal;
+}
+
+/* Mobile */
+@media (max-width: 779px) {
+  .home-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.chapter-image {
+    display: block;         /* centers the image */
+    margin: 1rem auto;      /* top/bottom margin, horizontally centered */
+    width: 400px;           /* fixed size, same as HTML width */
+    height: auto;           /* maintain aspect ratio */
+    max-width: none;        /* allow it to stay fixed, no scaling */
+}
+
+figcaption {
+    display: flex;               /* make caption a flex container */
+    justify-content: center;     /* center content horizontally */
+    gap: 0.25rem;                /* small space between author and title */
+    font-size: 0.7rem;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;             /* allow wrapping if needed */
+    line-height: 0.7;  
+}
+
+figcaption .caption-author {
+    font-style: normal;          /* author normal */
+}
+
+figcaption .caption-title {
+    font-style: italic;          /* title italic */
+}
+
+
+
+
+
+
+/* PAGE STYLES */
+
+/* page structure */
+
+div.page-wrapper {
+  /* the element that 'wraps' everything */
+  max-width: 1200px;   
+  max-width: min(100ch, 100%);   
+  margin: 0 auto;      
+  /* padding: 0.5rem; */
+  padding: 0.5rem 1rem;
+}
+
+.multiply {
+  mix-blend-mode: multiply;
+}
+
+/* navigation */
+ 
+nav ul {
+  list-style: none;       /* remove bullets */
+  padding: 0;             /* remove default padding */
+  margin: 0;              /* remove default margin */
+  display: flex;          /* horizontal layout */
+  justify-content: center; /* center the menu horizontally */
+  gap: 30px;              /* space between menu items */
+}
+
+
+
+
+
+/* content */
+
+main{
+ 
+}
+
+summary{
+  
+}
+
+
+section {
+  /* max-width: 60ch; */
+  margin-inline: 2rem;
+  padding-right: calc(100% / 3 + 2rem / 3);
+  box-sizing: border-box;
+}
+section:has(.text) {
+  padding-right: 0;
+  
+  display: flex;
+  gap: 2rem;
+}
+section:has(.text) > div {
+  flex: 1;
+}
+section:has(.text) > .text {
+  /* flex-basis: calc(200% / 3); */
+  flex-basis: 220%;
+}
+section:has(.text) > .text > * {
+  margin-top: 0;
+}
+section:has(.text) > .image,
+section:has(.text) > .footnote {
+  /* flex-basis: calc(100% / 3); */
+  flex-basis: 100%;
+}
+section:has(.text) > .image img,
+section:has(.text) > .footnote p {
+  position: sticky;
+  top: 3rem;
+  margin-bottom: 1rem;
+
+  max-width: 100%;
+  height: auto;
+}
+
+footer {
+    text-align: center;   /* centers the text horizontally */
+    margin-top: 2rem;     /* optional: space above the footer */
+}
+
+
+
+/* UTILITY CLASSES */
+
+/* hide desktop mobile etc */
+
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
+
+
+
+
+
+/* WEBSITE MEDIA QUERIES */
+
+/* responsive typeface for various breaking points, sets the default 'rem' value */
+
+@media (max-width: 340px) {
+  html {
+    font-size: 20px; /* smaller font for very narrow screens */
+  }
+
+  body {
+    font-size: 20px; /* keeps all text same size */
+  }
+}
+/* 
+@media (max-width: 299px) { :root{--font-size: 18px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 299px) and (max-width: 340px) { :root{--font-size: 19px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 340px) and (max-width: 440px) { :root{--font-size: 20px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 441px) and (max-width: 779px) { :root{--font-size: 19px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 780px) and (max-width: 992px) { :root{--font-size: 20px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 993px) and (max-width: 1200px) { :root{--font-size: 21px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 1201px) and (max-width: 1320px) { :root{--font-size: 22px;} html, body {font: var(--font-size) var(--font-text); } }
+@media (min-width: 1321px) { :root{--font-size: 24px;} html, body {font: var(--font-size) var(--font-text); } }
+
+/* styles for 'mobile', screen sizes up to 779px, should covers 'mobile' and 'tablet' */
+/* style this one first and then use the subsequent ones in a cascading way (from general to specific) */
+
+
+/* @media (max-width: 1200px) {
+  section:has(.text) > .text,
+  section:has(.text) > .image {
+    flex-basis: 100%;
+  }
+} */
+@media (max-width: 800px) {
+  section {
+    padding-right: 0;
+  }
+  section:has(.text) {
+    flex-direction: column;
+  }
+  section:has(.text) > .text  {
+    order: 1;
+  }
+  section:has(.text) > .image {
+    position: static;
+    order: 0;
+  }
+  section:has(.text) > .image img {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 779px) {
+
+  /* your 'mobile' overriding css properties here */
+
+
+
+  /* utility classes, mobile */
+
+  .desktop-only{
+    display:none;
+  }
+
+  .mobile-only{
+    display:block;
+  }
+
+}
+
+
+
+/* use this query to apply style changes to smaller smartphones sizes (like an iPhone 5S or SE 2016), max size of 339px */
+
+@media (max-width: 339px) {
+
+  /* your overriding css properties here */
+
+}
+
+
+
+/* use this query to apply style changes for 'mobile' screen sizes that are flipped in 'landscape' mode */
+
+@media (max-width: 779px) and (orientation: landscape) {
+
+   /* your overriding css properties here */
+
+}
+
+
+
+/* use this query to apply style for 'small' desktop screens */
+
+@media (min-width: 780px) and (max-width: 992px) {
+
+  /* your overriding css properties here */
+
+}
+
+
