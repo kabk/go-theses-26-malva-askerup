@@ -1,48 +1,39 @@
 @charset "UTF-8";
 
-/* @FONT FACE (enable the use of 'custom fonts' inside your document) */
-
-/* 
-  You can use 'fontsquirrel' (https://www.fontsquirrel.com) 
-  or 'transfonter' (https://transfonter.org)
-  to generate your own font for the web from .ttf or .oft files 
-*/
-
+/* FONTS */
 @font-face {
-    font-family: 'Mrs Eaves';
-    src: url('../fonts/mrs-eaves/mrs-eaves-roman.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+  font-family: 'Mrs Eaves';
+  src: url('../fonts/mrs-eaves/mrs-eaves-roman.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 @font-face {
-    font-family: 'Mrs Eaves';
-    src: url('../fonts/mrs-eaves/mrs-eaves-italic.woff2') format('woff2');
-    font-weight: normal;
-    font-style: italic;
-    font-display: swap;
+  font-family: 'Mrs Eaves';
+  src: url('../fonts/mrs-eaves/mrs-eaves-italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
 }
-
-
 
 /* VARIABLES */
 
 :root {
   /* Color values */
-  --color-background: rgba(255,255,255,1);
-  --color-text: rgba(0,0,0,1);
-  --color-text-link: rgba(0,0,255,0.8);
-  --color-text-link-hover: rgba(0,0,255,0.4);
+  --color-background: rgba(255, 255, 255, 1);
+  --color-text: rgba(0, 0, 0, 1);
+  --color-text-link: rgba(0, 0, 255, 0.8);
+  --color-text-link-hover: rgba(0, 0, 255, 0.4);
 
   /* Font values */
-  --font-text: "mrs-eaves", serif;
+  --font-text: 'mrs-eaves', serif;
   /* --font-size: 24px; */
   --font-size: 30px;
 
   /* Margin values */
   --margin: 1rem;
-
+  --header-offset: 0.5rem; /* master vertical spacing */
 
   /* Examples of possible variables 
 
@@ -56,77 +47,154 @@
   --margin-l: calc(var(--margin) * 3);
   --margin-xl: calc(var(--margin) * 5);
 */
-font-size: 30px;
-font-size: clamp( 24px, 2.5vw, 30px);
+  font-size: 30px;
+  font-size: clamp(24px, 2.5vw, 30px);
 }
 
-
-
-/* GENERAL STYLES*/
+/* GENERAL STYLES */
 
 html {
   /* font-size: 30px; */
-  background-color: #f36ba6
+  background-color: transparent;
   color: black;
+  scroll-behavior: smooth;
+  /* overflow-x: hidden */
+  overscroll-behavior-y: none;
+  scrollbar-color: #0000003d transparent;
+  scrollbar-width: thin;
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  box-sizing: border-box;
+  padding-top: 2.1rem; /* offset for fixed header */
   position: relative;
   background-color: #f36ba6;
-  font-family: "mrs-eaves", serif;
-  /* font-size: 30px; */
-  /* line-height: 1.1rem; */
+  font-family: 'mrs-eaves', serif;
   line-height: 1.1;
   color: black;
-  width:100%;
-  height:auto;
-  overflow-y:auto;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  overflow-x: hidden;
+  scrollbar-color: black;
 }
 
+/* BODY VARIATIONS */
+
 body.thesis-page {
-background-color: #ff2800;
+  background-color: #ff2800 !important;
   color: black;
 }
 
-h1{
+body.happening {
+  background-color: #686868;
+  color: black;
+  overflow: hidden; /* no scroll on this page */
+}
+
+body.happening main.slideshow-page {
+  position: fixed;
+  top: 3rem;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+/* POPUP ONLY */
+
+body.happening .popup-content {
+  background-color: #686868;
+  color: black;
+  border: 2px solid black;
+}
+
+body.reader {
+  background-color: #a3c795;
+  color: black;
+}
+
+body.reader .popup-content {
+  background-color: #a3c795;
+  color: black;
+  border: 2px solid black;
+}
+
+/* TYPOGRAPHY */
+
+h1 {
   /* h1 style */
-  /* font-size: 24px; */
-  font-size: .8rem;
+  font-size: 30px;
+  font-weight: normal;
+  font-style: italic;
+  text-align: center;
+
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 }
 
-h2{
+h1 .h1-regular {
+  font-style: normal; /* overrides italic from h1 */
+}
+
+h1 .h1-small {
+  font-style: normal; /* overrides italic */
+  font-size: 0.75rem;
+}
+
+h2 {
   /* h2 style */
-    font-weight: normal;             
-    /* font-size: 40px;   */
-    font-size: calc(4rem / 3);  
-    font-style: italic;
-    text-align: center;
 }
 
-h3{
-  /* h3 style */
+h3 {
+  font-size: 30px;
+  font-weight: normal;
+  font-style: italic;
+  text-align: center;
+  width: calc(100% + (100% / 3 + 2rem / 3));
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 }
 
-h4, h5, h6{
+h3 .h3-regular {
+  font-style: normal; /* overrides italic from h1 */
+}
+
+h3 .h3-small {
+  font-style: normal; /* overrides italic */
+  font-size: 0.75rem;
+}
+
+h4,
+h5,
+h6 {
   /* h4-h5-h6 style */
 }
 
-p{
+p {
   /* paragraph style */
 }
 
 p.quote,
-.footnote p { font-size: .75em }
-.footnote p { margin-top: 0 }
-ol, ul{
+.footnote p {
+  font-size: 0.75em;
+}
+.footnote p {
+  margin-top: 0;
+}
+ol,
+ul {
   /* ordered list and unordered list styles */
 }
 
-blockquote{
+blockquote {
   /* blockquote element style */
 }
 
-hr{
+hr {
   /* horizontal rule style */
 }
 
@@ -140,65 +208,203 @@ a:hover {
   text-decoration-color: #9dab09;
 }
 
-/* header stays fixed and centered */
+.center {
+  text-align: center;
+}
+
+/* HEADER */
+
 header {
-    /* position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 1200px; */
-    width: 100%;
-    padding: 0.5rem 0;       /* tight header height */
-    box-sizing: border-box;
-    z-index: 1000;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  padding-top: var(--header-offset);
+  padding-bottom: 0.5rem;
+  padding-inline: 1rem;
+  box-sizing: border-box;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-
-    position: sticky;
-    top: 0; 
-    max-width: 60ch;
-    margin-inline: auto;
+  position: fixed;
+  top: 0;
+  max-width: 60ch;
+  margin-inline: auto;
+  left: 0;
+  right: 0;
 }
 
+header.hide {
+  opacity: 0;
+  pointer-events: none;
+}
 
+#header-title {
+  cursor: pointer;
+  text-decoration: none;
+  color: #000;
+}
 
-/* keep content below header */
+#header-title:hover {
+  text-decoration: underline;
+  text-decoration-color: #9dab09;
+}
+
+.popup-index .popup-content {
+  background-color: #f36ba6;
+}
+
+/* popup for thesis page */
+.popup-thesis .popup-content {
+  background-color: #ff2800;
+}
+
+/* POP-UPS */
+
+.popup {
+  display: none; /* hidden by default */
+  position: fixed;
+  inset: 0; /* top/right/bottom/left = 0 */
+  z-index: 2000;
+  justify-content: center; /* horizontal center */
+  align-items: flex-start; /* start from top */
+  padding-top: 3rem; /* space below header */
+}
+
+.popup-content {
+  font-size: 0.75rem;
+  background-color: #f36ba6;
+  border: 2px solid black;
+  padding: 0rem 0.8rem 0rem 0.8rem; /* padding around content */
+  cursor: default;
+  max-width: 20rem; /* visually two columns */
+  position: relative; /* needed for absolute positioning of close */
+  max-height: 80vh; /* won't exceed 80% of viewport height */
+  min-height: 10rem;
+  overflow-y: auto;
+  overscroll-behavior: none;
+  scrollbar-color: #0000003d transparent;
+  scrollbar-width: thin;
+}
+
+.popup-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+  margin: 0 -0.3rem 0 0;
+  color: #000;
+  z-index: 1;
+}
+
+.popup-close:hover {
+  color: #9dab09;
+}
+
+/* GOSSIP-BAR */
+.gossip-bar {
+  width: 100vw;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 0.75rem;
+  padding: 0rem 0;
+}
+
+.gossip-track {
+  display: inline-block;
+  padding-left: 100%;
+  animation: gossip-scroll 20s linear infinite;
+}
+
+@keyframes gossip-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* HOME-PAGE */
+
+/* index page: make top of .home-grid match thesis page spacing */
+body:not(.thesis-page) .home-grid {
+  margin-top: 3rem; /* same as .home-grid on thesis page */
+}
+
+.home-button {
+  position: fixed;
+  top: 0.5rem;
+  left: 2rem;
+  z-index: 1000;
+}
+
+.home-button img {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
 .page-wrapper {
-    padding-top: 4.5rem;     /* header height + extra spacing */
-    padding-top: 3rem;    /* offset content to not overlap header */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 
-/* ===== HOMEPAGE GRID ===== */
+.page-wrapper main {
+  padding-inline: 1rem;
+  flex: 1; /* take all available space */
+}
+
+/* HOMEPAGE GRID */
 .home-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
-  /* padding: 4rem 0 2rem 0; */
+  gap: 1.75rem;
   margin: 4rem 2rem;
 }
 
 .home-item {
-  display: inline-block;      /* allows stacking in columns */
-  width: 100%;                /* full width inside column */
-  margin-bottom: 2rem;        /* vertical spacing between items */
+  display: inline-block; /* allows stacking in columns */
+  width: 100%; /* full width inside column */
 }
 
 .home-link {
   display: block;
   text-decoration: none;
   color: inherit;
+  position: relative;
 }
 
 .home-link:hover {
   text-decoration: none;
 }
-
-.home-item img {
+.home-link img,
+.home-link p {
   width: 100%;
   height: auto;
   display: block;
+}
+.home-link p {
+  display: block;
+  width: 100%;
+  margin: 0;
+  min-height: 100px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+body:not([class]) .home-item img {
+  aspect-ratio: 121/157;
+  object-fit: contain;
 }
 
 blockquote {
@@ -206,136 +412,435 @@ blockquote {
   font-style: normal;
 }
 
-/* Mobile */
-@media (max-width: 779px) {
-  .home-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
+/* CHAPTERS */
 
-@media (max-width: 550px) {
-  .home-grid {
-    grid-template-columns: 1fr;
-  }
+.chapter-title,
+.home-chapter-title {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 0.5rem));
+  margin: 0;
+  z-index: 2;
+  font-family: var(--font-text);
+  color: black;
+  text-align: center;
+}
+.chapter-title {
+  font-size: 30px;
+  font-style: italic;
+}
+.home-chapter-title {
+  font-size: 24px;
+  font-style: normal;
 }
 
 .chapter-image {
-    display: block;         /* centers the image */
-    margin: 1rem auto;      /* top/bottom margin, horizontally centered */
-    width: 400px;           /* fixed size, same as HTML width */
-    height: auto;           /* maintain aspect ratio */
-    max-width: none;        /* allow it to stay fixed, no scaling */
+  display: block; /* centers the image */
+  margin: 1rem auto; /* top/bottom margin, horizontally centered */
+  width: 400px; /* fixed size, same as HTML width */
+  height: auto; /* maintain aspect ratio */
+  max-width: none; /* allow it to stay fixed, no scaling */
+}
+
+/* FIGCAPTIONS */
+
+.home-grid figure figcaption {
+  font-family: var(--font-text);
+  font-size: 0.75em; /* same as .quote and .footnote p */
+  font-style: normal; /* or italic if needed */
+  line-height: 1.1; /* same as paragraph */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  display: block; /* remove flex so it behaves like a paragraph */
+
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 }
 
 figcaption {
-    display: flex;               /* make caption a flex container */
-    justify-content: center;     /* center content horizontally */
-    gap: 0.25rem;                /* small space between author and title */
-    font-size: 0.7rem;
-    margin-top: 0.5rem;
-    flex-wrap: wrap;             /* allow wrapping if needed */
-    line-height: 0.7;  
+  font-family: var(--font-text);
+  font-size: 0.75em; /* same as .quote and .footnote p */
+  font-style: normal; /* or italic if needed */
+  line-height: 1.1; /* same as paragraph */
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: block; /* remove flex so it behaves like a paragraph */
+
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
 }
 
 figcaption .caption-author {
-    font-style: normal;          /* author normal */
+  font-style: normal; /* author normal */
 }
 
 figcaption .caption-title {
-    font-style: italic;          /* title italic */
+  font-style: italic; /* title italic */
 }
-
-
-
-
-
 
 /* PAGE STYLES */
 
-/* page structure */
-
 div.page-wrapper {
   /* the element that 'wraps' everything */
-  max-width: 1200px;   
-  max-width: min(100ch, 100%);   
-  margin: 0 auto;      
+  max-width: 1200px;
+  max-width: min(100ch, 100%);
+  margin: 0 auto;
   /* padding: 0.5rem; */
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
 }
 
 .multiply {
   mix-blend-mode: multiply;
 }
 
-/* navigation */
- 
-nav ul {
-  list-style: none;       /* remove bullets */
-  padding: 0;             /* remove default padding */
-  margin: 0;              /* remove default margin */
-  display: flex;          /* horizontal layout */
-  justify-content: center; /* center the menu horizontally */
-  gap: 30px;              /* space between menu items */
+.image {
+  isolation: isolate; /* ensures the image blends only with section background */
+  background-color: #ff2800;
 }
 
+/* navigation */
 
-
-
+nav ul {
+  list-style: none; /* remove bullets */
+  padding: 0; /* remove default padding */
+  margin: 0; /* remove default margin */
+  display: flex; /* horizontal layout */
+  justify-content: center; /* center the menu horizontally */
+  gap: 30px; /* space between menu items */
+}
 
 /* content */
 
-main{
- 
+main {
+  max-width: 37rem;
+  padding-bottom: calc(var(--margin) * 2);
 }
 
-summary{
-  
+summary {
 }
-
 
 section {
-  /* max-width: 60ch; */
-  margin-inline: 2rem;
   padding-right: calc(100% / 3 + 2rem / 3);
   box-sizing: border-box;
 }
+
 section:has(.text) {
   padding-right: 0;
-  
   display: flex;
   gap: 2rem;
 }
+
 section:has(.text) > div {
   flex: 1;
 }
+
 section:has(.text) > .text {
-  /* flex-basis: calc(200% / 3); */
   flex-basis: 220%;
 }
+
 section:has(.text) > .text > * {
   margin-top: 0;
 }
+
 section:has(.text) > .image,
 section:has(.text) > .footnote {
-  /* flex-basis: calc(100% / 3); */
   flex-basis: 100%;
 }
+section:has(.text) > .footnote {
+  position: sticky;
+  top: var(--header-offset);
+  height: fit-content;
+  padding-bottom: 0.5rem;
+}
+
+/* REMOVE sticky from image */
 section:has(.text) > .image img,
 section:has(.text) > .footnote p {
+  margin-bottom: 0.25rem;
+  /* max-width: 100%; */
+  height: auto;
+  text-wrap: balance;
+}
+
+/* ADD sticky to container */
+section:has(.text) > .image {
   position: sticky;
   top: 3rem;
-  margin-bottom: 1rem;
+  align-self: flex-start;
+  top: var(--header-offset);
+}
 
+/* figure layout */
+section:has(.text) > .image figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+/* image */
+.sticky-image {
+  display: block;
+  max-width: 400px;
+  width: 100%;
+  height: auto;
+}
+
+/* small sticky side-note images */
+.sticky-image-small {
+  display: block;
+  max-width: 150px; /* smaller than main sticky images */
+  width: 100%; /* responsive scaling */
+  height: auto; /* maintain aspect ratio */
+  margin: 0.25rem 0; /* optional small vertical spacing */
+}
+
+.sticky-image-mini {
+  display: block;
+  max-width: 100px; /* smaller than main sticky images */
+  width: 100%; /* responsive scaling */
+  height: auto; /* maintain aspect ratio */
+  margin: 0.25rem 0; /* optional small vertical spacing */
+}
+
+/* caption */
+section:has(.text) > .image figure figcaption {
+  margin-top: 0.25rem;
+  text-wrap: balance;
+  /* text-align: center; */
+  font-size: 0.75em;
+  line-height: 1.1;
+}
+
+/* NEXT CHAPTER */
+
+.next-chapter {
+  display: flex;
+  justify-content: center;
+  margin: var(--margin-xl) 0;
+  align-items: flex-end; /* bottom-aligns the figures */
+  gap: 0.5rem; /* space between prev/next */
+}
+
+.next-chapter figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+}
+
+.next-chapter img {
+  max-width: 120px;
+  height: auto;
+  cursor: pointer;
+}
+
+.next-chapter figcaption {
+  margin-top: 0.5rem;
+  font-size: 0.75em;
+  text-align: center;
+}
+
+/* FIXED ELEMENTS */
+
+.fixed-happening {
+  position: fixed;
+  bottom: var(--header-offset);
+  padding: 0 var(--header-offset);
+  right: var(--margin);
+  font-family: 'mrs-eaves', serif;
+  font-size: 0.75rem;
+  color: black;
+  z-index: 1000;
+  /* margin: 0 auto; /* keep this */
+  /* margin-top: 0; */
+}
+
+.home-button img,
+.fixed-happening img {
+  width: 50px;
+  height: auto;
+  display: block;
+}
+
+.back-to-top {
+  position: fixed;
+  bottom: var(--header-offset);
+  right: var(--margin);
+  font-family: var(--font-text);
+  font-size: 0.75rem;
+  color: black;
+  text-decoration: none;
+  z-index: 1000;
+}
+
+.back-to-top:hover {
+  text-decoration: underline;
+  text-decoration-color: #9dab09;
+}
+
+/* HAPPENING PAGE */
+
+.happening-full {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* same as homepage grid */
+  gap: 1.75rem; /* same gap as .home-grid */
+  padding: 2rem 0; /* vertical spacing above/below */
+}
+
+.happening-full img {
+  grid-column: 1 / -1; /* span all 3 columns */
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* FOOTER */
+
+footer {
+  position: relative;
+  width: 100vw;
+  text-align: center;
+  background-color: #9dab09;
+  padding: var(--header-offset);
+  margin-top: 0;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+}
+
+footer p {
+  /* max-width: calc(100% - 12rem); */
+  margin: 0 auto; /* keep this */
+  padding-inline: 1rem;
+  text-wrap: balance;
+}
+
+/* SLIDESHOW HAPPENING */
+
+.slideshow-page {
+  width: calc(100vw - 4rem); /* full viewport minus horizontal margins */
+  height: calc(
+    100vh - 8rem
+  ); /* full viewport minus top+bottom margins (4rem each) */
+  display: flex;
+  justify-content: center; /* horizontal center */
+  align-items: center; /* vertical center */
+  position: relative; /* for caption positioning */
+  overflow: hidden;
+  font-family: 'mrs-eaves', serif;
+  box-sizing: border-box;
+}
+
+/* Full viewport slideshow */
+.slideshow-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #ff2800;
+  font-family: 'mrs-eaves', serif;
+  padding: 4rem 2rem; /* only add inner spacing if needed */
+  box-sizing: border-box; /* ensure padding doesn’t break width/height */
+}
+
+/* Base slide */
+.slideshow-slide {
+  display: none;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* centers images horizontally if inline-block */
+}
+
+.slideshow-slide.slide-small img {
+  width: 400px; /* exact width in pixels */
+  height: auto; /* keeps aspect ratio */
+  max-height: 80vh; /* optional: don’t overflow viewport height */
+}
+
+/* Active slide */
+.slideshow-slide.active {
+  display: flex;
+}
+
+/* Image sizing */
+.slideshow-slide img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  margin: auto; /* horizontally center */
+  display: block;
+  box-sizing: border-box;
+}
+
+.slideshow-caption {
+  position: fixed;
+  bottom: var(--header-offset); /* uses header offset */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 90vw; /* relative to viewport width */
+  max-width: 70vw; /* ensures it doesn’t go over the viewport */
+
+  text-align: center;
+  font-family: var(--font-text);
+  font-size: 0.75em;
+  font-style: normal;
+  line-height: 1.1;
+  color: white;
+  mix-blend-mode: difference;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* wrap only if necessary */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+  pointer-events: auto;
+  z-index: 10;
+}
+
+/* NAVIGATION CHAPTERS */
+
+.slideshow-prev,
+.slideshow-next {
+  position: fixed; /* fixed ensures it covers viewport, not just parent */
+  top: 0;
+  bottom: 0;
+  width: 50vw; /* half viewport width */
+  cursor: pointer;
+  z-index: 20;
+  background: transparent; /* keeps invisible */
+}
+
+.slide-inner {
+  position: relative;
+  display: inline-block; /* shrink-wrap to image */
+}
+
+/* IMAGE */
+.slide-inner img {
+  display: block;
   max-width: 100%;
   height: auto;
 }
 
-footer {
-    text-align: center;   /* centers the text horizontally */
-    margin-top: 2rem;     /* optional: space above the footer */
+/* COUNTER SLIDESHOW */
+.slideshow-counter {
+  position: fixed;
+  font-family: 'mrs-eaves', serif;
+  font-size: 0.75rem;
+  color: white;
+  mix-blend-mode: difference;
+  z-index: 10;
 }
 
-
+.slideshow-prev {
+  left: 0;
+}
+.slideshow-next {
+  right: 0;
+}
 
 /* UTILITY CLASSES */
 
@@ -348,10 +853,6 @@ footer {
 .mobile-only {
   display: none;
 }
-
-
-
-
 
 /* WEBSITE MEDIA QUERIES */
 
@@ -379,7 +880,6 @@ footer {
 /* styles for 'mobile', screen sizes up to 779px, should covers 'mobile' and 'tablet' */
 /* style this one first and then use the subsequent ones in a cascading way (from general to specific) */
 
-
 /* @media (max-width: 1200px) {
   section:has(.text) > .text,
   section:has(.text) > .image {
@@ -390,67 +890,224 @@ footer {
   section {
     padding-right: 0;
   }
+
+  h3 {
+    width: 100%;
+    margin-right: 0;
+  }
+
   section:has(.text) {
     flex-direction: column;
+    gap: 0;
   }
-  section:has(.text) > .text  {
+  section:has(.text) > .text {
     order: 1;
   }
-  section:has(.text) > .image {
-    position: static;
-    order: 0;
+
+  #header-title {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding-inline: 0.5rem;
   }
+
+  section:has(.text) > .image {
+    position: static; /* remove sticky behavior on mobile */
+    order: 0;
+    text-align: center; /* center the container horizontally */
+    margin: 0 auto; /* ensure block centering */
+  }
+
   section:has(.text) > .image img {
     margin-bottom: 0;
+  }
+  section:has(.text) > .footnote {
+    text-align: center;
+    order: 1;
+  }
+}
+
+/* MOBILE HEADER ADJUSTMENT */
+@media (max-width: 768px) {
+  header {
+    max-width: 100%; /* allow full width on mobile */
+    padding-inline: 1rem; /* reduce side padding */
+    align-items: center; /* center contents horizontally */
+  }
+
+  body {
+      padding-top: 3rem; /* offset for fixed header */
+  }
+
+  header nav ul {
+    flex-direction: column; /* stack menu items vertically */
+    gap: 0.5rem; /* smaller spacing between links */
+    width: auto; /* let ul shrink to fit content */
+    justify-content: center; /* center the stacked links */
+    text-align: center; /* center text inside links */
+  }
+
+  header nav ul li {
+    margin: 0; /* remove default margins */
+    width: 100%; /* optional: full-width touch target */
+  }
+
+  header nav ul li a {
+    display: block;
+    text-align: center; /* center link text */
+  }
+
+  .popup {
+    position: fixed;
+    bottom: 1rem; /* consistent distance from bottom */
+    left: 0;
+    right: 0;
+    padding: 0.5rem 0.5rem; /* vertical and horizontal padding */
+    box-sizing: border-box;
+    max-width: 100%; /* full width on mobile */
+    margin: 0 auto; /* center horizontally if max-width changes */
   }
 }
 
 @media (max-width: 779px) {
-
-  /* your 'mobile' overriding css properties here */
-
-
+  /*   'mobile' overriding css properties here */
 
   /* utility classes, mobile */
 
-  .desktop-only{
-    display:none;
+  .desktop-only {
+    display: none;
   }
 
-  .mobile-only{
-    display:block;
+  .mobile-only {
+    display: block;
   }
-
 }
-
-
 
 /* use this query to apply style changes to smaller smartphones sizes (like an iPhone 5S or SE 2016), max size of 339px */
 
 @media (max-width: 339px) {
-
-  /* your overriding css properties here */
-
+  /*   overriding css properties here */
 }
-
-
 
 /* use this query to apply style changes for 'mobile' screen sizes that are flipped in 'landscape' mode */
 
 @media (max-width: 779px) and (orientation: landscape) {
-
-   /* your overriding css properties here */
-
+  /*   overriding css properties here */
 }
-
-
 
 /* use this query to apply style for 'small' desktop screens */
 
 @media (min-width: 780px) and (max-width: 992px) {
-
-  /* your overriding css properties here */
-
+  /*   overriding css properties here */
 }
 
+img,
+#header-title,
+.home-link,
+h1,
+.next-chapter,
+.back-to-top,
+nav,
+.gossip-track,
+.fixed-happening,
+.slideshow-caption,
+.slideshow-counter,
+footer {
+  -moz-user-select: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+figcaption {
+  cursor: default;
+}
 
+/* Mobile */
+@media (max-width: 779px) {
+  .home-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  html,
+  body {
+    overflow-x: hidden; /* prevent horizontal scroll */
+    width: 100%; /* make sure viewport width is respected */
+  }
+
+  /* Make sections fit within viewport */
+  section {
+    max-width: 100%;
+    padding-right: 1rem; /* adjust any big paddings */
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 550px) {
+  .home-grid {
+    margin-inline: 0;
+    /* grid-template-columns: 1fr; */
+  }
+  .home-button {
+    left: 0.5rem;
+  }
+}
+
+@media print {
+  /* Hide UI elements */
+  nav,
+  .home-button,
+  .back-to-top,
+  header,
+  .next-chapter,
+  .fixed-happening,
+  footer {
+    display: none !important;
+  }
+
+  /* Printer margin */
+  @page {
+    margin: 1cm;
+  }
+
+  /* Reset spacing */
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  .page-wrapper {
+    margin: 0 auto;
+    max-width: 100%;
+  }
+
+  main {
+    padding: 0;
+  }
+
+  /* Force all images to be half size and centered */
+  img {
+    width: 50% !important;
+    height: auto !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Fix all parent containers that may block centering */
+  figure,
+  .image,
+  section:has(.text) > .image,
+  .home-link {
+    display: block !important;
+    text-align: center !important;
+    position: static !important; /* disables sticky/flex issues */
+    width: 100% !important;
+  }
+
+  /* Optional: captions aligned with the image */
+  figure figcaption {
+    width: 50% !important; /* match image width */
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+}
