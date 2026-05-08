@@ -62,22 +62,3 @@ images.forEach(img => {
 
 
 
-const issue5 = document.querySelector('.issue-5-link');
-const cursorImage = document.querySelector('.issue-5-cursor');
-
-if (issue5 && cursorImage) {
-
-  issue5.addEventListener('mouseenter', () => {
-    cursorImage.style.display = 'block';
-  });
-
-  issue5.addEventListener('mouseleave', () => {
-    cursorImage.style.display = 'none';
-  });
-
-  issue5.addEventListener('mousemove', (e) => {
-    cursorImage.style.left = (e.clientX + 20) + 'px';
-    cursorImage.style.top = (e.clientY + 20) + 'px';
-  });
-
-}
