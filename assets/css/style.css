@@ -412,6 +412,7 @@ blockquote {
   font-style: normal;
 }
 
+
 /* CHAPTERS */
 
 .chapter-title,
@@ -756,6 +757,23 @@ footer p {
   width: 400px; /* exact width in pixels */
   height: auto; /* keeps aspect ratio */
   max-height: 80vh; /* optional: don’t overflow viewport height */
+}
+
+.slideshow-slide.slide-full {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh; /* 👈 instead of 100vh */
+  z-index: 5;
+}
+
+.slideshow-slide.slide-full img {
+  width: 100vw;
+  height: 100dvh; /* 👈 match container */
+  object-fit: cover;
+
+  max-width: none;
+  max-height: none;
 }
 
 /* Active slide */
