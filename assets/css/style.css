@@ -646,9 +646,20 @@ section:has(.text) > .image figure figcaption {
 
 .fixed-happening {
   position: fixed;
-  bottom: var(--header-offset);
-  padding: 0 var(--header-offset);
-  right: var(--margin);
+  top: 0.7rem;
+  right: 1rem;
+  font-family: 'mrs-eaves', serif;
+  font-size: 0.75rem;
+  color: black;
+  z-index: 1000;
+  /* margin: 0 auto; /* keep this */
+  /* margin-top: 0; */
+}
+
+.reader-happening {
+  position: fixed;
+  bottom: 0.7rem;
+  right: 1rem;
   font-family: 'mrs-eaves', serif;
   font-size: 0.75rem;
   color: black;
