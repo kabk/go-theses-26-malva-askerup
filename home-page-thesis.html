@@ -7,8 +7,8 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-		<meta name="description" content="The Bitters Column is a bi-weekly publication about forming a feminist graphic design practice in conversation with others." /> 
-		<meta name="keywords" content="TBC, women, feminized labor, archive, onions, feminist publishing"/> 
+		<meta name="description" content="The Bitters Column is a bi-weekly publication about forming a feminist graphic design practice in conversation with others." />
+		<meta name="keywords" content="TBC, women, feminized labor, archive, onions, feminist publishing"/>
 		<meta name="author" content="Malva Askerup" />
 
 		<link rel="icon" href="assets/images/favicon/loj.png"/>
@@ -20,31 +20,38 @@
 <link rel="stylesheet" href="https://use.typekit.net/iww7ucv.css">
 
 		<link rel="stylesheet" href="assets/css/style.css?ver=1.0">
-	
+
 	</head>
 
 	<body class="thesis-page">
   <div class="page-wrapper">
 
 <header>
-  <a href="#" id="header-title">Women* Sitting at the Machine, Thinking</a>
+  <a href="#" id="header-title" class="js-open-popup">Women* Sitting at the Machine, Thinking</a>
+
+  <nav class="corner-nav">
+    <a href="#" class="js-open-popup">About</a>
+    <a href="happening.html">Events</a>
+    <a href="home-page-thesis.html">Editorial</a>
+    <a href="reader-home-page.html">Reader</a>
+  </nav>
 </header>
 
 	<div class="popup popup-thesis" id="popup">
   <div class="popup-content">
     <button class="popup-close" id="popup-close">&times;</button>
     <p>The Bitters Column is a bi-weekly publication about forming a feminist graphic design practice in conversation with others. </p>
-	
+
 	<p>
-		This is the fifth&thinsp;—&thinsp;and special&thinsp;—&thinsp;issue, publishing a text titled ‘Women* Sitting at the Machine, Thinking’, written as an expanded editorial note of sorts, meditating on four words: ‘to form a practice’. 
+		This is the fifth&thinsp;—&thinsp;and special&thinsp;—&thinsp;issue, publishing a text titled ‘Women* Sitting at the Machine, Thinking’, written as an expanded editorial note of sorts, meditating on four words: ‘to form a practice’.
 
 	</p>
 
 	<p>
-	Colophon: Big thanks to&thinsp;—&thinsp;Elisabeth Rafstedt, Johanna Ehde, Phil Baber, Samuel Solomon, Jaehyun Kim, Lisbeth Jørgensen, Bart de Baets, Linda van Deursen, Robert Milne, Barbara Neves Alves. Footer numbers by Stan Zielinski. Typeset in Mrs Eaves* by Zuzanna Licko. The cover is typeset in Olga Oppenheimer** by Bea Schlingelhoff. 
+	Colophon: Big thanks to&thinsp;—&thinsp;Elisabeth Rafstedt, Johanna Ehde, Phil Baber, Samuel Solomon, Jaehyun Kim, Lisbeth Jørgensen, Bart de Baets, Linda van Deursen, Robert Milne, Barbara Neves Alves. Footer numbers by Stan Zielinski. Typeset in Mrs Eaves* by Zuzanna Licko. The cover is typeset in Olga Oppenheimer** by Bea Schlingelhoff.
 
 	</p>
-	
+
 	<p>
 		*Mrs Eaves by Zuzana Licko was designed in 1996 as a tribute to Sarah Eaves, who worked as a housekeeper and later married typographer John Baskerville. As an informally trained typographer, she proceeded to complete the work with Baskerville’s unfinished volumes after his death. Within a few years of its launch, it had become one of the most successful typefaces of its day, honoring Sarah Eaves not in a monumental fashion, with a statue or a public square, but right at the level on which she worked, in print, on the typeface, just like Baskerville.
 	</p>
@@ -54,22 +61,22 @@
 
 <p class="center">*</p>
 
-<p>Contact: <a href="mailto:malvaaskerup@gmail.com">malvaaskerup@gmail.com</a></p>  
+<p>Contact: <a href="mailto:malvaaskerup@gmail.com">malvaaskerup@gmail.com</a></p>
 
 <p><a href="mailto:malvaaskerup@gmail.com?subject=Subscribe%20to%20TBC">*Subscribe to The Bitters Column newsletter*</a>
 </p>
 
-<p>This is a research project into editorial practices as means for collaborative work, initiated by graphic designer Malva Askerup, as part of graduation project 2026.</p>
+<p>This is a research project into editorial practices as means for collaborative work, initiated by graphic designer <a href="https://malvaaskerup.nl/">Malva Askerup</a>.</p>
 
 <p>Web design and development: Malva Askerup</p>
 
 </div>
 </div>
 
-<div class="gossip-bar"> 
-  <div class="gossip-track"> 
+<div class="gossip-bar">
+  <div class="gossip-track">
     What did the bartender say to his customer that liked his beer bitter? <em>Don’t worry. Beer hoppy.</em>
-  </div> 
+  </div>
 </div>
 
 
@@ -120,16 +127,7 @@
 
 </main>
 
-<!-- <a href="reader-home-page.html" class="fixed-happening">(reader)</a> -->
-  
-<a href="reader-home-page.html" class="fixed-happening">
-  <img src="content/book.png" alt="reader">
-</a>
 
-
-
-
-			</div>
 
 		<footer>
 
@@ -139,6 +137,8 @@
 			</p>
 
 		</footer>
+
+			</div>
 
 		<!-- end webpage content -->
 
@@ -151,7 +151,7 @@ document.addEventListener('keydown', function (e) {
     // Check for Cmd+P (Mac) or Ctrl+P (Windows)
     if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'p') {
         e.preventDefault(); // Stop the default print dialog
-        
+
         // Open your PDF (replace with your file URL)
         window.open('/pdf/TBC-Issue-5.pdf', '_blank');
     }

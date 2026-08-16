@@ -220,6 +220,18 @@ addEventListener("scroll",()=>{
 });
 </script>
 
+	<script>
+document.addEventListener('keydown', function (e) {
+    // Check for Cmd+P (Mac) or Ctrl+P (Windows)
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'p') {
+        e.preventDefault(); // Stop the default print dialog
+
+        // Open your PDF (replace with your file URL)
+        window.open('/pdf/TBC-Issue-5.pdf', '_blank');
+    }
+});
+</script>
+
 	</body>
 
 </html>

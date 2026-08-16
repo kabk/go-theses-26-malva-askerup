@@ -35,6 +35,10 @@
   --margin: 1rem;
   --header-offset: 0.5rem; /* master vertical spacing */
 
+  /* Reserved width on the right so header titles and the gossip-bar
+     marquee never run under the fixed corner-nav */
+  --corner-nav-clearance: 9rem;
+
   /* Examples of possible variables 
 
   --font-size-heading: calc(var(--font-size) * 2);
@@ -206,6 +210,7 @@ a {
 a:hover {
   text-decoration: underline;
   text-decoration-color: #9dab09;
+  text-underline-offset: 0.2em;
 }
 
 .center {
@@ -247,6 +252,7 @@ header.hide {
 #header-title:hover {
   text-decoration: underline;
   text-decoration-color: #9dab09;
+  text-underline-offset: 0.2em;
 }
 
 .popup-index .popup-content {
@@ -312,6 +318,10 @@ header.hide {
   white-space: nowrap;
   font-size: 0.75rem;
   padding: 0rem 0;
+  /* keep the marquee text clear of the fixed corner-nav so the two
+     don't visually collide as the text scrolls in from the right */
+  box-sizing: border-box;
+  padding-right: var(--corner-nav-clearance);
 }
 
 .gossip-track {
@@ -326,6 +336,73 @@ header.hide {
   }
   to {
     transform: translateX(-100%);
+  }
+}
+
+/* CORNER NAV (About / Events / Editorial / Reader)
+   Sits fixed in the same top-right spot the old "(happening)" link used,
+   on one line, and never pushes or shrinks the (always centered) header
+   title. Instead, script.js/slideshow.js measure on load/resize whether
+   the title's edge would actually run into the nav; if so they add
+   .wrap-below, which drops the nav to its own line under the header —
+   still right-aligned, just no longer pinned to the corner. This reacts
+   to the real rendered width of each page's title rather than a fixed
+   breakpoint, since "The Bitters Column" and "Women* Sitting at the
+   Machine, Thinking" need very different amounts of room. */
+
+.corner-nav {
+  position: fixed;
+  top: 0.7rem;
+  right: 1rem;
+  z-index: 1000;
+  display: flex;
+  gap: 0.45rem;
+}
+
+.corner-nav a {
+  display: inline-block;
+  font-family: 'mrs-eaves', serif;
+  font-size: 0.75rem;
+  color: black;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.corner-nav a:hover {
+  text-decoration: underline;
+  text-decoration-color: #9dab09;
+  text-underline-offset: 0.2em;
+}
+
+/* marks the link for the page currently being viewed — same treatment
+   as :hover, so it reads as "you are here" rather than a disabled state */
+.corner-nav a.current {
+  text-decoration: underline;
+  text-decoration-color: #9dab09;
+  text-underline-offset: 0.2em;
+  pointer-events: none;
+}
+
+/* Applied by JS when the title would otherwise run into the nav.
+   Stays position:fixed with the same `right: 1rem` as the normal state —
+   only `top` changes (set inline by JS to sit just under the title) —
+   so the nav's right edge always lines up with the same page corner,
+   instead of drifting to match the header's own (narrower, centered)
+   box width. */
+.corner-nav.wrap-below {
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  width: max-content;
+  max-width: calc(100vw - 2rem);
+}
+
+@media (max-width: 480px) {
+  .corner-nav {
+    gap: 0.35rem;
+  }
+
+  .corner-nav a {
+    font-size: 0.65rem;
   }
 }
 
@@ -677,6 +754,7 @@ section:has(.text) > .image figure figcaption {
 .back-to-top:hover {
   text-decoration: underline;
   text-decoration-color: #9dab09;
+  text-underline-offset: 0.2em;
 }
 
 /* HAPPENING PAGE */
@@ -700,6 +778,7 @@ section:has(.text) > .image figure figcaption {
 footer {
   position: relative;
   width: 100vw;
+  box-sizing: border-box; /* keep the side padding inside the 100vw/100% width instead of adding to it */
   text-align: center;
   background-color: #9dab09;
   padding: var(--header-offset);
@@ -950,6 +1029,12 @@ footer p {
     max-width: 100%; /* allow full width on mobile */
     padding-inline: 1rem; /* reduce side padding */
     align-items: center; /* center contents horizontally */
+    /* The home-button icon sits fixed in the top-left corner on every page
+       that has one. On mobile the header title/nav is centered edge-to-edge,
+       so a long title (or the "Home" nav link) can wrap and its first line
+       runs straight under that icon. Reserve room on the left so the
+       centered content never starts underneath it. */
+    padding-left: 4.5rem;
   }
 
   body {
@@ -976,13 +1061,40 @@ footer p {
 
   .popup {
     position: fixed;
-    bottom: 1rem; /* consistent distance from bottom */
-    left: 0;
-    right: 0;
-    padding: 0.5rem 0.5rem; /* vertical and horizontal padding */
+    inset: 0;
+    align-items: center; /* center vertically instead of pinning under the header */
+    padding: 0.5rem; /* vertical and horizontal padding */
     box-sizing: border-box;
     max-width: 100%; /* full width on mobile */
     margin: 0 auto; /* center horizontally if max-width changes */
+  }
+
+  /* Shrink the home icon a bit on mobile so it needs less clearance and
+     reads less heavy next to the (often two-line) header title. */
+  .home-button img {
+    width: 40px;
+  }
+
+  /* The chapter labels ("Part 1/3" etc.) on the homepage grid are
+     absolutely positioned to float above their image on desktop, where the
+     grid is a single row and there's nothing above them to hit. On mobile
+     the grid wraps to multiple rows (see .home-grid below), so a floating
+     label can overlap the row above it. Let it sit in normal flow instead
+     — same look, but it can never collide with anything. */
+  .home-chapter-title {
+    position: static;
+    transform: none;
+    display: block;
+    margin: 0 0 0.4rem;
+  }
+
+  /* Avoid the row-1 caption/label pair colliding with the corner-nav or
+     gossip-bar collision logic elsewhere — footer previously relied on
+     100vw, which can render wider than the visual viewport and quietly
+     push its own height/wrapping around. 100% keeps it exactly as wide as
+     its (already full-bleed) container. */
+  footer {
+    width: 100%;
   }
 }
 
@@ -1027,6 +1139,7 @@ h1,
 nav,
 .gossip-track,
 .fixed-happening,
+.corner-nav,
 .slideshow-caption,
 .slideshow-counter,
 footer {
@@ -1067,6 +1180,11 @@ figcaption {
   .home-button {
     left: 0.5rem;
   }
+  header {
+    /* home-button sits closer to the edge below this width, so it needs
+       less clearance than the 768px breakpoint reserves */
+    padding-left: 3.25rem;
+  }
 }
 
 @media print {
@@ -1077,6 +1195,7 @@ figcaption {
   header,
   .next-chapter,
   .fixed-happening,
+  .corner-nav,
   footer {
     display: none !important;
   }
