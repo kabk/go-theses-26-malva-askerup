@@ -52,7 +52,10 @@
   --margin-xl: calc(var(--margin) * 5);
 */
   font-size: 30px;
-  font-size: clamp(24px, 2.5vw, 30px);
+  /* Floor raised from 24px so mobile body text (which sits at this floor
+     on most phone widths, since 2.5vw stays under 24px until ~960px) isn't
+     noticeably smaller than desktop text. */
+  font-size: clamp(26px, 2.5vw, 30px);
 }
 
 /* GENERAL STYLES */
@@ -71,7 +74,9 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for browsers without dvh support */
+  min-height: 100dvh; /* matches the real visible viewport on phones, so the
+    footer doesn't sit below where the address bar leaves room for */
   margin: 0;
   box-sizing: border-box;
   padding-top: 2.1rem; /* offset for fixed header */
@@ -401,9 +406,10 @@ header.hide {
     gap: 0.35rem;
   }
 
-  .corner-nav a {
-    font-size: 0.65rem;
-  }
+  /* Was shrunk to 0.65rem here, which made the nav noticeably smaller
+     than figcaption (0.75em) on phones under 480px — the two are meant
+     to read as the same size. Left at 0.75rem so they match; the
+     .wrap-below JS already handles the nav not fitting in one line. */
 }
 
 /* HOME-PAGE */
@@ -429,7 +435,9 @@ body:not(.thesis-page) .home-grid {
 .page-wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for browsers without dvh support */
+  min-height: 100dvh; /* matches the real visible viewport on phones, so the
+    footer doesn't sit below where the address bar leaves room for */
   justify-content: center;
   align-items: center;
   align-content: center;
@@ -956,11 +964,12 @@ footer p {
 
 @media (max-width: 340px) {
   html {
-    font-size: 20px; /* smaller font for very narrow screens */
+    font-size: 22px; /* smaller font for very narrow screens, raised
+      from 20px to stay proportional to the 26px floor above */
   }
 
   body {
-    font-size: 20px; /* keeps all text same size */
+    font-size: 22px; /* keeps all text same size */
   }
 }
 /* 
@@ -1029,12 +1038,18 @@ footer p {
     max-width: 100%; /* allow full width on mobile */
     padding-inline: 1rem; /* reduce side padding */
     align-items: center; /* center contents horizontally */
-    /* The home-button icon sits fixed in the top-left corner on every page
-       that has one. On mobile the header title/nav is centered edge-to-edge,
-       so a long title (or the "Home" nav link) can wrap and its first line
-       runs straight under that icon. Reserve room on the left so the
-       centered content never starts underneath it. */
-    padding-left: 4.5rem;
+  }
+
+  /* The home-button icon sits fixed in the top-left corner on every page
+     that has one. On mobile the header title is centered edge-to-edge,
+     so a long title can wrap and its first line can run under that icon.
+     Reserve clearance on BOTH sides (not just the left) so the title's
+     box narrows symmetrically and stays visually centered instead of
+     shifting off-center — a one-sided padding-left on the whole header
+     used to do that, which is what made the header look shifted. */
+  #header-title {
+    max-width: calc(100% - 7rem);
+    margin-inline: auto;
   }
 
   body {
@@ -1180,10 +1195,10 @@ figcaption {
   .home-button {
     left: 0.5rem;
   }
-  header {
+  #header-title {
     /* home-button sits closer to the edge below this width, so it needs
        less clearance than the 768px breakpoint reserves */
-    padding-left: 3.25rem;
+    max-width: calc(100% - 5rem);
   }
 }
 
