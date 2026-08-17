@@ -348,16 +348,7 @@ header.hide {
   }
 }
 
-/* CORNER NAV (About / Events / Editorial / Reader)
-   Sits fixed in the same top-right spot the old "(happening)" link used,
-   on one line, and never pushes or shrinks the (always centered) header
-   title. Instead, script.js/slideshow.js measure on load/resize whether
-   the title's edge would actually run into the nav; if so they add
-   .wrap-below, which drops the nav to its own line under the header —
-   still right-aligned, just no longer pinned to the corner. This reacts
-   to the real rendered width of each page's title rather than a fixed
-   breakpoint, since "The Bitters Column" and "Women* Sitting at the
-   Machine, Thinking" need very different amounts of room. */
+/* CORNER NAV (About / Events / Editorial / Reader) */
 
 .corner-nav {
   position: fixed;
