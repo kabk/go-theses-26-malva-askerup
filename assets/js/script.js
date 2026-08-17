@@ -27,24 +27,31 @@ docReady(function() {
 const popup = document.getElementById("popup");
 const popupClose = document.getElementById("popup-close");
 
-// Any element with .js-open-popup opens the popup — this covers both the
-// #header-title link and the new "(about)" link in the corner nav.
-const popupTriggers = document.querySelectorAll(".js-open-popup");
+// Not every page has a popup (the essay/reader pages like introduction.html
+// don't). Guard all of this on both elements actually existing — without
+// this, popupClose.addEventListener() threw on those pages and silently
+// killed every script below it on the page, including the corner-nav and
+// header-title collision fixes further down this file.
+if (popup && popupClose) {
+  // Any element with .js-open-popup opens the popup — this covers both the
+  // #header-title link and the new "(about)" link in the corner nav.
+  const popupTriggers = document.querySelectorAll(".js-open-popup");
 
-popupTriggers.forEach((trigger) => {
-  trigger.addEventListener("click", (e) => {
-    e.preventDefault();
-    popup.style.display = "flex";
+  popupTriggers.forEach((trigger) => {
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      popup.style.display = "flex";
+    });
   });
-});
 
-popupClose.addEventListener("click", () => {
-  popup.style.display = "none";
-});
+  popupClose.addEventListener("click", () => {
+    popup.style.display = "none";
+  });
 
-popup.addEventListener("click", (e) => {
-  if(e.target === popup) popup.style.display = "none";
-});
+  popup.addEventListener("click", (e) => {
+    if (e.target === popup) popup.style.display = "none";
+  });
+}
 
 // Underline whichever corner-nav link points at the page you're on
 document.querySelectorAll(".corner-nav a[href]").forEach((link) => {
@@ -91,6 +98,64 @@ updateCornerNavLayout();
 window.addEventListener("resize", updateCornerNavLayout);
 if (document.fonts && document.fonts.ready) {
   document.fonts.ready.then(updateCornerNavLayout);
+}
+
+// The home-button icon sits fixed in the top-left corner. The header title
+// is centered and wraps at whatever width it needs, so a long title's first
+// line can end up starting close to (or under) the icon on narrow phones —
+// how close depends on the exact title text and viewport width, not just
+// one or the other. Rather than guess a fixed breakpoint (which either
+// leaves narrow phones unprotected or forces unnecessarily short lines on
+// wider ones — both of which happened here before), measure the actual
+// rendered lines against the actual icon position, and only narrow the
+// title (symmetrically, so it stays centered) when a real collision would
+// occur.
+//
+// Two different pages use two different title markups: most pages use
+// #header-title directly in <header>, but the essay/reader pages (e.g.
+// introduction.html, sadie-plant.html) put their title in <header><nav><ul>
+// <li><a>. Both already render as a centered, wrapping block on mobile
+// (see the `header nav ul li a` rule below), so the same fix applies to
+// either — just need to find whichever one is actually on the page.
+function updateHeaderTitleLayout() {
+  const title =
+    document.getElementById("header-title") ||
+    document.querySelector("header nav ul li a");
+  const homeButton = document.querySelector(".home-button");
+  if (!title || !homeButton) return;
+
+  title.style.maxWidth = ""; // measure from the natural (unconstrained) wrap
+  title.style.marginInline = "";
+
+  const buffer = 16; // minimum breathing room, in px
+  const homeRect = homeButton.getBoundingClientRect();
+  const titleRect = title.getBoundingClientRect(); // natural width == "100%"
+
+  // Check every rendered line (not just the title's overall box), since
+  // only whichever line sits at the icon's height actually matters.
+  const range = document.createRange();
+  range.selectNodeContents(title);
+  const lineRects = Array.from(range.getClientRects());
+
+  const needsClearance = lineRects.some((r) => {
+    const verticalOverlap = r.top < homeRect.bottom && r.bottom > homeRect.top;
+    return verticalOverlap && r.left < homeRect.right + buffer;
+  });
+
+  if (needsClearance) {
+    const neededLeft = homeRect.right + buffer;
+    const newWidth = titleRect.width - 2 * (neededLeft - titleRect.left);
+    if (newWidth > 0) {
+      title.style.maxWidth = newWidth + "px";
+      title.style.marginInline = "auto"; // keep it centered at the new width
+    }
+  }
+}
+
+updateHeaderTitleLayout();
+window.addEventListener("resize", updateHeaderTitleLayout);
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(updateHeaderTitleLayout);
 }
 
 

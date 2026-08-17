@@ -52,10 +52,11 @@
   --margin-xl: calc(var(--margin) * 5);
 */
   font-size: 30px;
-  /* Floor raised from 24px so mobile body text (which sits at this floor
-     on most phone widths, since 2.5vw stays under 24px until ~960px) isn't
-     noticeably smaller than desktop text. */
-  font-size: clamp(26px, 2.5vw, 30px);
+  /* Floor for phone widths (2.5vw stays under this until ~960px wide).
+     h1/h3/header/nav are all sized in rem/em off this root value, so
+     moving the floor keeps the whole type scale — headings, body text,
+     nav — moving together instead of just shrinking paragraphs. */
+  font-size: clamp(19px, 2.5vw, 30px);
 }
 
 /* GENERAL STYLES */
@@ -138,7 +139,9 @@ body.reader .popup-content {
 
 h1 {
   /* h1 style */
-  font-size: 30px;
+  /* 1rem, not a fixed 30px — so h1 tracks the root clamp() like body
+     text does, instead of staying pinned at desktop size on phones. */
+  font-size: 1rem;
   font-weight: normal;
   font-style: italic;
   text-align: center;
@@ -160,7 +163,8 @@ h2 {
 }
 
 h3 {
-  font-size: 30px;
+  /* 1rem, not a fixed 30px — same reasoning as h1 above. */
+  font-size: 1rem;
   font-weight: normal;
   font-style: italic;
   text-align: center;
@@ -517,7 +521,10 @@ blockquote {
   font-style: italic;
 }
 .home-chapter-title {
-  font-size: 24px;
+  /* 1rem, not a fixed 24px — matches the header title / h1 / h3, so "Part
+     1/3" etc. read as part of the same heading scale instead of sitting at
+     their own fixed size that stopped tracking the root clamp(). */
+  font-size: 1rem;
   font-style: normal;
 }
 
@@ -963,13 +970,19 @@ footer p {
 /* responsive typeface for various breaking points, sets the default 'rem' value */
 
 @media (max-width: 340px) {
-  html {
-    font-size: 22px; /* smaller font for very narrow screens, raised
-      from 20px to stay proportional to the 26px floor above */
+  /* :root, not html — the :root clamp() above has higher specificity
+     than a plain `html` selector even though they target the same
+     element, so an `html { font-size }` rule here would silently lose
+     and never apply. That was happening before this fix: rem-based
+     elements (h1, h3, ...) stayed at the 19px floor on very narrow
+     phones while body's own text dropped to 16px, out of sync. */
+  :root {
+    font-size: 16px; /* smaller font for very narrow screens, kept
+      proportional to the 19px floor above */
   }
 
   body {
-    font-size: 22px; /* keeps all text same size */
+    font-size: 16px; /* keeps all text same size */
   }
 }
 /* 
@@ -1040,17 +1053,13 @@ footer p {
     align-items: center; /* center contents horizontally */
   }
 
-  /* The home-button icon sits fixed in the top-left corner on every page
-     that has one. On mobile the header title is centered edge-to-edge,
-     so a long title can wrap and its first line can run under that icon.
-     Reserve clearance on BOTH sides (not just the left) so the title's
-     box narrows symmetrically and stays visually centered instead of
-     shifting off-center — a one-sided padding-left on the whole header
-     used to do that, which is what made the header look shifted. */
-  #header-title {
-    max-width: calc(100% - 7rem);
-    margin-inline: auto;
-  }
+  /* #header-title already goes full-width + text-align:center + display:block
+     below (max-width: 800px) — that's what keeps it centered and clear of
+     the home-button icon (centered text never sits flush against the
+     edge). An earlier fix added a max-width clearance here on top of that,
+     which narrowed the title's box enough to force an extra line break
+     ("Women* Sitting" / "at the Machine," / "Thinking" instead of two
+     lines) without actually being needed to avoid the icon. */
 
   body {
       padding-top: 3rem; /* offset for fixed header */
@@ -1111,6 +1120,7 @@ footer p {
   footer {
     width: 100%;
   }
+
 }
 
 @media (max-width: 779px) {
@@ -1194,11 +1204,6 @@ figcaption {
   }
   .home-button {
     left: 0.5rem;
-  }
-  #header-title {
-    /* home-button sits closer to the edge below this width, so it needs
-       less clearance than the 768px breakpoint reserves */
-    max-width: calc(100% - 5rem);
   }
 }
 
