@@ -571,6 +571,12 @@ figcaption .caption-title {
   font-style: italic; /* title italic */
 }
 
+figcaption .caption-series {
+  font-style: normal;
+  font-size: 0.75em; /* smaller than the rest of the caption — figcaption
+    itself is already 0.75em of body, so this is ~0.56em of body overall */
+}
+
 /* PAGE STYLES */
 
 div.page-wrapper {
