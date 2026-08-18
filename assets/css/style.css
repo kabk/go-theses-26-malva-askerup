@@ -56,7 +56,7 @@
      h1/h3/header/nav are all sized in rem/em off this root value, so
      moving the floor keeps the whole type scale — headings, body text,
      nav — moving together instead of just shrinking paragraphs. */
-  font-size: clamp(19px, 2.5vw, 30px);
+  font-size: clamp(20px, 2.5vw, 30px);
 }
 
 /* GENERAL STYLES */
